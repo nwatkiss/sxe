@@ -102,7 +102,7 @@ sxe_smtpd_default_helo_handler(struct SXE_SMTPD_CLIENT *client, const char *helo
     SXE_UNUSED_PARAMETER(helo);
     SXE_UNUSED_PARAMETER(helo_len);
     SXEE94I("(client=%p,helo=%.*s,helo_len=%u)", client, helo_len, helo, helo_len);
-    sxe_smtpd_respond(client, SXE_SMTP_ACTION_OK, "localhost", NULL);
+    sxe_smtpd_respond(client, SXE_SMTP_ACTION_OK, "localhost");
     SXER90I("return");
 }
 
@@ -262,7 +262,7 @@ parse_cmd(SXE_SMTPD_CLIENT * client, const char ** ptr, const char * crlf, const
                 /* AHA! We should never hit a '$' unless there is only
                  * whitespace until the crlf! */
                 if (*ptr != crlf) {
-                    sxe_smtpd_respond(client, SXE_SMTP_SYNARG, syntax);
+                    sxe_smtpd_respond(client, SXE_SMTP_SYNARG, "%s", syntax);
                     goto SXE_EARLY_OUT;
                 }
             }
@@ -297,7 +297,7 @@ parse_cmd(SXE_SMTPD_CLIENT * client, const char ** ptr, const char * crlf, const
 SXE_ERROR_OUT:
     if (!result) {
         if (arg)
-            sxe_smtpd_respond(client, SXE_SMTP_SYNARG, syntax);
+            sxe_smtpd_respond(client, SXE_SMTP_SYNARG, "%s", syntax);
         else
             sxe_smtpd_respond(client, SXE_SMTP_SYNCOMMAND, SXE_ESMTP_COMMAND_NOT_RECOGNIZED);
     }
@@ -827,6 +827,7 @@ sxe_smtpd_register_extension(SXE_SMTPD * self, SXE_SMTPD_EXTENSION * extension, 
  * @note               Register SMTP extensions with sxe_smtpd_register_extension().
  */
 
+__printflike(2, 3)
 SXE_RETURN
 sxe_smtpd_respond_ehlo(SXE_SMTPD_CLIENT * client, const char *fmt, ...)
 {
@@ -905,6 +906,7 @@ sxe_smtpd_respond_ehlo(SXE_SMTPD_CLIENT * client, const char *fmt, ...)
  *                     eventually fails, the connection will be closed, and
  *                     the close callback will be invoked.
  */
+__printflike(3, 4)
 SXE_RETURN
 sxe_smtpd_respond(SXE_SMTPD_CLIENT * client, int code, const char *fmt, ...)
 {

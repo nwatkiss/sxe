@@ -25,6 +25,7 @@
 
 #include "sxe.h"
 #include "sxe-list.h"
+#include "sxe-log.h"
 #include "sxe-util.h"
 
 #include "sxe-rfc822-addr.h"
