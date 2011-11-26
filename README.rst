@@ -53,6 +53,8 @@ Event driven programming in C
 |         +------------+--------------------------------------------------------------------------------------+
 |         |sxe-pool-tcp|TCP connection pool                                                                   |
 |         +------------+--------------------------------------------------------------------------------------+
+|         |sxe-smtpd   |A very basic SMTP server                                                              |
+|         +------------+--------------------------------------------------------------------------------------+
 |         |sxe-socket  |Portable sockets API allowing cross compilation on multiple operating systems         |
 |         +------------+--------------------------------------------------------------------------------------+
 |         |sxe-spawn   |Spawn a program on the end of a SXE TCP connection that it uses as its stdin/stdout   |
